@@ -1,0 +1,16 @@
+- name: Check if "rd.lvm.lv=" param exist within grub.cfg.
+  hosts: "{{hosts}}"
+  become: True
+  #become_user: alrh
+  gather_facts: False
+  tasks:
+   - name: Checking kernel version 
+     ansible.builtin.shell: uname -r
+     register: uname
+   - name: showing uname
+     debug: msg="{{uname.stdout_lines}}"
+   - name: Checking if "rd.lvm.lv=" param exists within grub.cfg
+     ansible.builtin.shell: "sudo cat /boot/grub2/grub.cfg | grep 'rd.lvm.lv='"
+     register: grub
+   - name: showing grub
+     debug: msg="{{grub.stdout_lines}}"
