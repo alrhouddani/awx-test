@@ -1,0 +1,24 @@
+---
+- hosts: windows
+  gather_facts: False
+  tasks:
+    - name: list package
+      win_shell: choco list -lo Select-String "{{package}}"
+      register: list    
+    - name: installing package
+      win_shell: choco install "{{package}}" --no-progress --limit-output -y
+      register: install
+      when: "'0 packages installed.' in list.stdout"
+    - name: showing list output
+      debug: msg="{{install.stdout_lines}}"
+      when: "'0 packages installed.' in list.stdout"
+
+
+
+
+
+
+
+
+
+

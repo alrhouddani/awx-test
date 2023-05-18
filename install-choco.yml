@@ -1,0 +1,15 @@
+---
+- hosts: windows
+  gather_facts: False
+  tasks:
+    - name: run powershell
+      win_shell: Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+      register: connection
+    - name: showing connection
+      debug: msg="{{connection.stdout_lines}}"
+
+
+
+
+
+
