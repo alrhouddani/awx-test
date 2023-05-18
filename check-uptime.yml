@@ -1,0 +1,11 @@
+- name: check up time
+  hosts: "{{hosts}}"
+  become: True
+  become_user: dpiesa
+  gather_facts: False
+  tasks:
+   - name: checking service status
+     command: uptime
+     register: result
+   - name: showing report
+     debug: msg="{{result.stdout_lines}}"
